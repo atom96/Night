@@ -1,19 +1,3 @@
-/**
- * "Maszyna Noc"
- *
- * Drugi program zaliczeniowy na zajęcia laboratoryjne ze Wstępu
- * do programowania, będący interpreterem Języka Noc.
- *
- * Opis działania Maszyny Noc, czyli abstrakcji komputera, oraz składni
- * języka noc, a także ograniczenia realizowanej wersji, znajdują się
- * na platformie Moodle:
- * https://moodle.mimuw.edu.pl/mod/assignment/view.php?id=17464
- *
- * Autor: Arkadiusz Tomczak
- * wersja 1.1
- * data: 20 grudnia 2015
- */
-
 #include <assert.h>
 #include <ctype.h>
 #include <stdbool.h>
@@ -513,7 +497,7 @@ void zaladuj(int pam[], char *kod) {
 /**
  * Zwraca adres operandu w pamięci Maszyny Noc.
  */
-int adr_operand(int pam[], int op) {
+int adrOperand(int *pam, int op) {
     int adr = -1;
     switch (op) {
         case ACC:
@@ -563,10 +547,10 @@ void przejdz(int pam[], int op) {
 /**
  * Wykonuje odpowiednią instrukcje zapisaną w pamięci Maszyny Moc.
  */
-void instrukcja_wykonaj(int pam[]) {
+void instrukcjaWykonaj(int *pam) {
     int op = pam[pam[IP]] % KOD_PODST;
     int ins = pam[pam[IP]] / KOD_PODST;
-    int adr = adr_operand(pam, op);
+    int adr = adrOperand(pam, op);
     char znak;
     int liczba;
     przejdz(pam, op);
@@ -732,7 +716,7 @@ void instrukcja_wykonaj(int pam[]) {
  */
 void wykonaj(int pam[]) {
     for (;;) {
-        instrukcja_wykonaj(pam);
+        instrukcjaWykonaj(pam);
     }
 }
 
@@ -744,4 +728,3 @@ int main(int argc, char *argv[]) {
     wykonaj(pam);
     return 0;
 }
-
